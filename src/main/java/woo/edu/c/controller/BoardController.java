@@ -89,7 +89,8 @@ public class BoardController {
 //	ajax사용 삭제
 	@RequestMapping(value="/board/boardAjaxDelete", method = RequestMethod.GET)
 	public void boardAjaxDelete(@RequestParam("getBoardNum") int boardNum) {
-		
+		System.out.println(boardNum);
+//		boardService.delete(boardNum);
 	}
 	
 	

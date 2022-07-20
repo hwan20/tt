@@ -43,14 +43,26 @@
 //.ready는 페이지가 로딩 되고 클라이언트에서 완전히 읽어들이면 아래 펑션을 실행함? .onload와 비슷한 기능
 $(document).ready(function() {
 	boardList();
-	
 });
+
+/* 게시글 삭제 */
+$("#ajaxList").on("click", "#conDelete", function(){
+//  어떻게 boardNum을 가져올까?
+	var getBoardNum = $(this).attr("value");
+// 	console.log(getBoardNum);
+	conDelete(getBoardNum);
+});
+
+
+/* 게시글 보기 */
 $("#ajaxList").on("click", ".boardT", function(){
 // 	동적으로 추가된 태그에 이벤트 동작되지 않음. $(부모 태그).on("이벤트", "자식 태그", function(){})으로 작성
     var getBoardNum = $(this).attr("data-value");
 //     console.log(getBoardNum);
     boardAjaxcDetail(getBoardNum);
 });
+
+
 
 
 /* 게시물 리스트 */
@@ -89,14 +101,13 @@ function boardList() {
             //펑션에서 받은 data를 넘겨주고 반복 횟수, 조건문을 적어줌
             $.each(data, function(index, item) {
 //                  console.log(index);
-	             h += "<tr>";
-	             h += "<td>"+item.boardNum+"</td>";
-// 	             h += "<td id=\"boardT\">"+"<a href=\"/board/boardAjaxcDetail?boardNum="+item.boardNum+"\">"+item.boardTitle+"</a>"+"</td>";
-// 	             h += "<td>"+"<a id=\"boardT\" href=\"#"+item.boardNum+"\">"+item.boardTitle+"</a>"+"</td>";
-	             h += "<td>"+"<a class=boardT href=# data-value="+item.boardNum+">"+item.boardTitle+"</a>"+"</td>";
-	             h += "<td>"+item.boardName+"</td>";
-	             h += "<td>"+item.boardDate+"<button class='btn' id='conDelete();'>삭제</button>"+"</td>";
-	             h += "</tr>";
+	            h += "<tr>";
+	            h += "<td>"+item.boardNum+"</td>";
+	            h += "<td>"+"<a class=\"boardT\" href=# data-value="+item.boardNum+">"+item.boardTitle+"</a>"+"</td>";
+	            h += "<td>"+item.boardName+"</td>";
+// 	            h += "<td>"+item.boardDate+"<button class='btn' onclick=\"conDelete();\">삭제</button>"+"</td>";
+                h += "<td>"+item.boardDate+"<button class=\"btn\" id=\"conDelete\" value="+item.boardNum+">삭제</button></td>";
+                h += "</tr>";
             })
             $("#ajaxList").html(h);
         },
@@ -107,15 +118,24 @@ function boardList() {
 };
 
 
-
+// $("#ajaxList").on("click", ".boardT", function(){
 /* 게시글 삭제 */
-$("#conDelete").on("click", function(){
-	$.ajax({
-	    type:"get",
-	    url:"/board/boardAjaxDelete",
-	    
-	})
-})
+function conDelete(getBoardNum){
+	var getBoardNum = $(this).attr("data-value");
+    alert(getBoardNum);
+    $.ajax({
+        type:"get",
+        url:"/board/boardAjaxDelete",
+        dataType:"json",
+        data:{"getBoardNum":getBoardNum},
+        success:function(data){
+            console.log(data);
+        },
+        error(error){
+            console.log(error);
+        }
+    });
+};
 
 
 /* 게시물 작성 */
@@ -187,7 +207,7 @@ function clo(){
 	    $("#ta").show();
 	    $("#bt").show();
 	}
-}
+};
 
 
 </script>
