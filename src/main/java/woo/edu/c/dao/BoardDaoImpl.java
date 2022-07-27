@@ -36,8 +36,8 @@ public class BoardDaoImpl implements BoardDao {
 	}
 
 	@Override
-	public void insert(BoardVo vo) {
-		sql.insert(namespace + ".insert", vo);
+	public int insert(BoardVo vo) {
+		return sql.insert(namespace + ".insert", vo);
 	}
 
 	@Override
@@ -53,9 +53,8 @@ public class BoardDaoImpl implements BoardDao {
 	}
 
 	@Override
-	public void delete(int boardNum) {
-		sql.delete(namespace + ".delete", boardNum);
-		
+	public int delete(int boardNum) {
+		return sql.delete(namespace + ".delete", boardNum);
 	}
 
 	

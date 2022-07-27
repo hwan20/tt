@@ -42,8 +42,8 @@ public class BoardServiceImpl implements BoardService{
 
 	
 	@Override
-	public void write(BoardVo vo) {
-		boardDao.insert(vo);
+	public int write(BoardVo vo) {
+		return boardDao.insert(vo);
 	}
 
 	@Override
@@ -60,9 +60,8 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public void delete(int boardNum) {
-		boardDao.delete(boardNum);
-		
+	public int delete(int boardNum) {
+		return boardDao.delete(boardNum);
 	}
 
 
