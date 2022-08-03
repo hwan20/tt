@@ -35,26 +35,32 @@ public class BoardDaoImpl implements BoardDao {
 		return sql.selectList(namespace + ".boardList");
 	}
 
-	@Override
-	public int insert(BoardVo vo) {
-		return sql.insert(namespace + ".insert", vo);
-	}
+//	@Override
+//	public int insert(BoardVo vo) {
+//		return sql.insert(namespace + ".insert", vo);
+//	}
 
 	@Override
 	public BoardVo conDetail(int boardNum) {
-		
+		//하나의 게시글만 가져올 때는 selectOne
 		return sql.selectOne(namespace + ".conDetail", boardNum);
 	}
 
-	@Override
-	public void update(BoardVo vo) {
-		sql.update(namespace + ".update", vo);
-		
-	}
+//	@Override
+//	public void update(BoardVo vo) {
+//		sql.update(namespace + ".update", vo);
+//	}
 
 	@Override
 	public int delete(int boardNum) {
 		return sql.delete(namespace + ".delete", boardNum);
+	}
+
+	@Override
+	public int merge(BoardVo vo) {
+//		이렇게 두 개를 같이 사용하면 X 
+//		sql.update(namespace + ".update", vo);
+		return sql.insert(namespace + ".merge", vo);
 	}
 
 	

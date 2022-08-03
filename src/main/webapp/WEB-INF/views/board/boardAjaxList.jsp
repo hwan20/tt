@@ -98,7 +98,7 @@ $("#ajaxList").on("click", "#conDelete", function(){
 
 /* 게시물 리스트 */
 function boardList() {
-	console.log("ajax");
+// 	console.log("ajax");
 //list로 넘어오는 데이터를 어떻게 출력하지?
 
     $.ajax({
@@ -131,7 +131,8 @@ function boardList() {
 
             //펑션에서 받은 data를 넘겨주고 반복 횟수, 조건문을 적어줌
             $.each(data, function(index, item) {
-//                  console.log(index);
+                
+                console.log(item);
 	            h += "<tr>";
 // 	            h += "<td><input type='checkbox' onclick='check(this);' value="+item.boardNum+"></td>";
 	            h += "<td><input type='checkbox' name='check' onclick='chkB();' value="+item.boardNum+"></td>";

@@ -41,10 +41,10 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	
-	@Override
-	public int write(BoardVo vo) {
-		return boardDao.insert(vo);
-	}
+//	@Override
+//	public int write(BoardVo vo) {
+//		return boardDao.insert(vo);
+//	}
 
 	@Override
 	public BoardVo conDetail(int boardNum) {
@@ -52,16 +52,19 @@ public class BoardServiceImpl implements BoardService{
 		return boardDao.conDetail(boardNum);
 	}
 
-	@Override
-	public void update(BoardVo vo) {
-		
-		boardDao.update(vo);
-		
-	}
+//	@Override
+//	public void update(BoardVo vo) {
+//		boardDao.update(vo);
+//	}
 
 	@Override
 	public int delete(int boardNum) {
 		return boardDao.delete(boardNum);
+	}
+
+	@Override
+	public int merge(BoardVo vo) {
+		return boardDao.merge(vo);
 	}
 
 

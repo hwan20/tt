@@ -9,6 +9,21 @@
 		</select>
 		
    		<select id="boardList" parameterType="BoardVo" resultType="BoardVo">
+<!-- 			SELECT b.* -->
+<!-- 			FROM ( -->
+<!-- 			        SELECT ROWNUM AS ROW_NUM,  -->
+<!-- 			               b2.* -->
+<!-- 			        FROM ( -->
+<!-- 			                SELECT BOARD_NUM,  -->
+<!-- 			                       BOARD_TITLE,  -->
+<!-- 			                       BOARD_NAME,  -->
+<!-- 			                       BOARD_DATE -->
+<!-- 			                FROM BOARD b2  -->
+<!-- 			                ORDER BY BOARD_NUM ASC -->
+<!-- 			             ) b2 -->
+<!-- 			     ) b -->
+<!-- 			WHERE ROW_NUM BETWEEN 2 AND 9 -->
+			
 			SELECT 
 					BOARD_NUM,
 					BOARD_TITLE,
@@ -17,15 +32,18 @@
 					BOARD_DATE
 			FROM BOARD
 			ORDER BY BOARD_NUM DESC
-<!-- 			SELECT boardNum, -->
-<!-- 				   boardTitle, -->
-<!-- 				   boardName, -->
-<!-- 				   boardDate -->
+
+<!--            오라클에서 snake케이스로 작성된 칼럼명이 mapUnderscoreToCamelCase 라이브러리 때문에 여기서  자동으로 camel케이스로 작성된다 -->
+<!-- 		X	SELECT boardNum, -->
+<!-- 		X		   boardTitle, -->
+<!-- 		X		   boardName, -->
+<!-- 		X		   boardDate -->
 <!-- 			FROM BOARD2 -->
 <!-- 			ORDER BY boardNum DESC -->
+
 		</select>
 		
-	 	<insert id="insert" parameterType="BoardVo">
+<!-- 	 	<insert id="insert" parameterType="BoardVo">
 			INSERT INTO BOARD
 			(
 				BOARD_NUM,
@@ -42,7 +60,8 @@
 				#{boardCon},
 				SYSDATE
 			)
-		</insert>
+		</insert> -->
+		
 		<select id="conDetail" parameterType="int" resultType="BoardVo">
 			SELECT BOARD_NUM,
 				   BOARD_TITLE,
@@ -52,18 +71,50 @@
 			WHERE BOARD_NUM=#{boardNum}
 		</select>
 		
-		<update id="update" parameterType="BoardVo">
+<!-- 		<update id="update" parameterType="BoardVo">
 			UPDATE BOARD
 			SET BOARD_TITLE=#{boardTitle},
 				BOARD_NAME=#{boardName},
 				BOARD_CON=#{boardCon}
 			WHERE BOARD_NUM=#{boardNum}
-		</update>
+		</update> -->
 		
 		<delete id="delete" parameterType="int">
 			DELETE FROM BOARD
 			WHERE BOARD_NUM=#{boardNUM}
 		</delete>
+		
+		<update id="merge" parameterType="BoardVo">
+				MERGE 
+				 INTO BOARD
+				USING dual
+				   ON (BOARD_NUM = #{boardNum})
+				 WHEN MATCHED THEN
+				      UPDATE
+				         SET BOARD_TITLE = #{boardTitle},
+				             BOARD_NAME = #{boardName},
+				             BOARD_CON = #{boardCon}
+				 WHEN NOT MATCHED THEN
+				      INSERT (BOARD_NUM, BOARD_TITLE, BOARD_NAME, BOARD_CON)
+				      VALUES (seq_board.NEXTVAL,#{boardTitle},#{boardName},#{boardCon})
+		</update>
+		
+		<!-- merge로 할 때는 insert나 update나 상관 없는듯 -->
+<!-- 		<insert id="merge" parameterType="BoardVo">
+				MERGE 
+				 INTO BOARD
+				USING dual
+				   ON (BOARD_NUM = #{boardNum})
+				 WHEN MATCHED THEN
+				      UPDATE
+				         SET BOARD_TITLE = #{boardTitle},
+				             BOARD_NAME = #{boardName},
+				             BOARD_CON = #{boardCon}
+				 WHEN NOT MATCHED THEN
+				      INSERT (BOARD_NUM, BOARD_TITLE, BOARD_NAME, BOARD_CON)
+				      VALUES (seq_board.NEXTVAL,#{boardTitle},#{boardName},#{boardCon})
+		</insert> -->
+		
 	</mapper>
 	
 	

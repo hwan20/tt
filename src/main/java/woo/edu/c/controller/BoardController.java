@@ -61,7 +61,7 @@ public class BoardController {
 		//model은 SELECT나 UPDATE 등의 조건 데이터를 넘겨준다?
 		List<BoardVo> list = boardService.getList();
 		model.addAttribute("list", list);
-		System.out.println(list); 
+//		System.out.println(list); 
 		return "board/boardlist";
 	}
 
@@ -149,7 +149,8 @@ public class BoardController {
 	public String boardAjaxWrite(BoardVo vo) {		//produces = "application/text; charset=UTF-8" 넘어오는 text를 한글화 해줌 
 //		public String boardAjaxWrite(@RequestBody BoardVo vo) { //ajax로 json문자가 전달될 때 @RequestBody를 사용해야한다.
 		System.out.println("boardAjaxWrite==="+vo);
-		int wr = boardService.write(vo);
+		int wr = boardService.merge(vo);
+//		int wr = boardService.write(vo);
 		String str = "";
 		if(wr == 1) {
 			str = "성공";
@@ -188,7 +189,11 @@ public class BoardController {
 	
 	@RequestMapping(value="/board/boardwrite", method = RequestMethod.POST)
 	public ModelAndView postWrite(BoardVo vo){
-		boardService.write(vo);
+		
+		System.out.println("insert boardVo=="+vo);
+		boardService.merge(vo); //merge로 해보기
+		
+//		boardService.write(vo);
 //		return new ModelAndView("redirect:boardList");
 		ModelAndView mView = new ModelAndView();
 		mView.setViewName("redirect:boardList");
@@ -224,7 +229,11 @@ public class BoardController {
 	
 	@RequestMapping(value="/board/boardupdate", method = RequestMethod.POST)
 	public String postUpdate(BoardVo vo) {
-		boardService.update(vo);
+		//merge사용해서 글쓰기와 업데이트 동시
+		boardService.merge(vo);
+		System.out.println("update vo=="+vo);
+		
+//		boardService.update(vo);
 		return "redirect:boardList";
 		
 	}
