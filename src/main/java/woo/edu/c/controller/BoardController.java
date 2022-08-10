@@ -1,5 +1,6 @@
 package woo.edu.c.controller;
 
+import java.util.Calendar;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -259,6 +260,36 @@ public class BoardController {
 		
 		return "board/calculator"; 
 	}
+	
+//	스케줄러
+	@RequestMapping(value="/board/calender", method = RequestMethod.GET)
+	public String schedule(Model model) {
+		Calendar cal = Calendar.getInstance(); //달력을 사용하기 위해 객체 생성, 추상화 클래스라 객체를 직접 생성할 수가 없어 static메서드인 getInstance()를 사용해 생성
+		
+//		기준이 되는 달을 가져와서 최대 일수를 계산함
+		cal.set(2022, 7,  3); //월은 -1을 해줘야함. 2022년 8월 3일을 계산한거
+//		System.out.println(cal.getActualMaximum(Calendar.DAY_OF_MONTH)); //2022년 8월의 최대 일수 31일
+//		어디에 쓰지??
+//		int year = cal.get(Calendar.YEAR);
+//		int mon = cal.get(Calendar.MONTH)+1;
+//		int day = cal.get(Calendar.DAY_OF_MONTH);
+//		int hour = cal.get(Calendar.HOUR_OF_DAY);
+//		int min = cal.get(Calendar.MINUTE);
+//		int sec = cal.get(Calendar.SECOND);
+		
+		
+//		여기에서 현재 시간에 맞는 달력 데이터를 배열로 view에 넘겨주고 view에서 년, 월, 일주일 데이터를 뽑기? 
+		
+		int day[][][] = new int [12][6][7]; //월,최대 6주,요일
+		String week[] =  {
+				"일", "월", "화", "수", "목", "금", "토"
+		};
+		
+//		System.out.println(week.getClass().getName());
+		
+		return "board/calender"; 
+	}
+
 
 	
 	

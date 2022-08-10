@@ -87,7 +87,7 @@
 		<update id="merge" parameterType="BoardVo">
 				MERGE 
 				 INTO BOARD
-				USING dual
+				USING dual <!-- 자기 자신의 테이블만 사용할 경우 -->
 				   ON (BOARD_NUM = #{boardNum})
 				 WHEN MATCHED THEN
 				      UPDATE
