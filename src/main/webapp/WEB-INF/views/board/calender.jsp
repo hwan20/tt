@@ -205,8 +205,12 @@ $("#nextMon").click(function(){
 }) 
 
 
-//날짜를 눌렀을 때 popup창이 뜨도록 하기
-// $("#calDate").
+// 날짜를 눌렀을 때 popup창이 뜨도록 하기
+// 팝업창은 어떤걸로? 모달창? https://velog.io/@keywookim/What-is-%EB%AA%A8%EB%8B%AC-or-%ED%8C%9D%EC%97%85
+$("#calDate").on("click", "td", function(){
+// 	console.log($(this).text());
+//     window.open(); //https://m.blog.naver.com/dasol825/220672901113
+})
 
 
 
